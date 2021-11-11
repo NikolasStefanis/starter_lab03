@@ -33,7 +33,40 @@ pdrome:
 # Write you code here.
 # Any code above the label swapArray is not executed by the tester! 
 ###############################################################################
-   
+
+addi $sp, $sp, -8 #katanomh ths mnhmhs se stoiba
+sw $ra, 0($sp) #apothikeuei thn dieuthunsh epistrofhs
+sw $a0, 4($sp) #apothikeuei thn timh orismatos
+
+lw $a0, 4($sp) #load argument
+add $t1, $a0, $zero #apothikeuei thn timh tou ston t1
+
+li $t2, 1 #orizei ton t2 se 1
+li $v0, 1 #proetoimazei thn timh epistrofhs (return value)
+srl $t3, $a1, 1 #ypologizei to mhkos tou string kai to diairei me to 2
+addi $t3, $t3, 1 #se periptosh pou einai zygos o arithmos prosthetei akomh ena 
+
+loop:
+beq $t2,$t3 exit #otan o counter ftanei sth mesh tou string - exit
+lb $t4, 0($a0) #t4 = first char
+
+sub $t5, $a1, $t2 #afairei ton counter apo to mhkos tou string
+add $t6, $t5, $t1 #add index apo to telos tou string mexri thn arxh tou address
+lb $t7, 0($t6) #t7 = last char
+
+beq $t4, $t7, continue #an oi harakthres einai oi idioi synexise
+li $v0, 0 #an oxi return 0
+j exit
+
+continue:
+addi $a0, $a0, 1 #metopise ton pointer sto string ena keno pros ta deksia
+addi $t2, $t2, 1 #counter =counter + 1
+j loop
+
+exit:
+
+lw $ra, 0($sp) #load return address
+addi $sp, $sp, 8 #free stack
 	
 
 ###############################################################################
